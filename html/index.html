@@ -102,10 +102,17 @@ body {
 </select>
 
 
+<form action="http://192.168.56.101:3344" method="POST">
 <script type="text/javascript">
     // run pre selected options
     $('#pre-selected-options').multiSelect();
 </script>
+名字：<input type="text" name="name"><br>
+年龄：<input type="number" name="age">
+<input type="submit" value="提交">
+</form>
+<!--
+
 <script type="text/javascript">
     $(document).on("mousedown",function(e){
       if ($(e.target).is('img')) {
@@ -118,6 +125,7 @@ body {
       }
     })
 </script>
-
+-->
+<input type="submit" value="">
 </body>
 </html>
