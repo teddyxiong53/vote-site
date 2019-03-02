@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+}
+
+.header {
+  text-align: center;
+  padding: 32px;
+}
+
+.row {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 0 4px;
+}
+
+.column img {
+  margin-top: 8px;
+  vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+  .column {
+    -ms-flex: 50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../css/multi-select.css">
+<title>DOSS Vote System</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="../js/jquery.multi-select.js"></script>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <p>从下面的图片里选择5张，然后提交。</p>
+</div>
+
+<!-- Photo Grid -->
+<div class="row">
+  <div class="column">
+    <img src="./imgs/1.jpg" style="width:100%">
+    <img src="./imgs/2.jpg" style="width:100%">
+    <img src="./imgs/3.jpg" style="width:100%">
+    <img src="./imgs/4.jpg" style="width:100%">
+    <img src="./imgs/5.jpg" style="width:100%">
+    <img src="./imgs/6.jpg" style="width:100%">
+    <img src="./imgs/7.jpg" style="width:100%">
+  </div>
+  <div class="column">
+    <img src="./imgs/8.jpg" style="width:100%">
+    <img src="./imgs/9.jpg" style="width:100%">
+    <img src="./imgs/10.jpg" style="width:100%">
+    <img src="./imgs/11.jpg" style="width:100%">
+    <img src="./imgs/12.jpg" style="width:100%">
+    <img src="./imgs/13.jpg" style="width:100%">
+  </div>
+
+</div>
+
+<select id='pre-selected-options' multiple='multiple'>
+        <option value='elem_1' selected>elem 1</option>
+        <option value='elem_2'>elem 2</option>
+        <option value='elem_3'>elem 3</option>
+        <option value='elem_4' selected>elem 4</option>
+        ...
+        <option value='elem_100'>elem 100</option>
+</select>
+
+
+<script type="text/javascript">
+    // run pre selected options
+    $('#pre-selected-options').multiSelect();
+</script>
+<script type="text/javascript">
+    $(document).on("mousedown",function(e){
+      if ($(e.target).is('img')) {
+        var s = window.getSelection();
+        s.removeAllRanges();
+        var range = document.createRange();
+        console.log(e.target);
+        range.selectNode(e.target);
+        s.addRange(range);
+      }
+    })
+</script>
+
+</body>
+</html>
