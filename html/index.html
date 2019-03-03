@@ -11,7 +11,7 @@
   <div>
     <h1>请在下面勾选5种耳机：</h1>
     <p>
-      规则：如果最喜欢哪一种，勾选框1，依次勾选5个。<button>清空所有选择</button>
+      规则：每种耳机只能选一次。选择完成后，填写用户信息后提交即可。<button id="clear_all">清空所有选择</button>
     </p>
 
   </div>
@@ -33,20 +33,20 @@
     </tr>
     <tr>
       <td><img src="./imgs/1.jpg"></td>
-      <td><input type="radio" name="first"></td>
-      <td><input type="radio" name="second"></td>
-      <td><input type="radio" name="third"></td>
-      <td><input type="radio" name="forth"></td>
-      <td><input type="radio" name="fifth"></td>
+      <td><input type="radio" name="first" class="1.jpg"></td>
+      <td><input type="radio" name="second" class="1.jpg"></td>
+      <td><input type="radio" name="third" class="1.jpg"></td>
+      <td><input type="radio" name="forth" class="1.jpg"></td>
+      <td><input type="radio" name="fifth" class="1.jpg"></td>
     </tr>
 
     <tr>
       <td><img src="./imgs/2.jpg"></td>
-      <td><input type="radio" name="first"></td>
-      <td><input type="radio" name="second"></td>
-      <td><input type="radio" name="third"></td>
-      <td><input type="radio" name="forth"></td>
-      <td><input type="radio" name="fifth"></td>
+      <td><input type="radio" name="first" class="2.jpg"></td>
+      <td><input type="radio" name="second" class="2.jpg"></td>
+      <td><input type="radio" name="third" class="2.jpg"></td>
+      <td><input type="radio" name="forth" class="2.jpg"></td>
+      <td><input type="radio" name="fifth" class="2.jpg"></td>
     </tr>
 
     <tr>
@@ -78,43 +78,128 @@
 
   
   </table>
+  <br>
+  <br>
+  <h1>请填写下面信息后提交</h1>
 
   <div id="info_div">
     <form action="http://192.168.56.101:3344" method="POST">
       名字：<input type="text" name="name"><br>
-      年龄：<input type="number" name="age">
+      年龄：<input type="number" name="age"><br>
+      性别：<select>
+        <option value="male">男</option>
+        <option value="female">女</option>
+        </select><br>
       <input type="submit" value="提交">
     </form>
   </div>
-
-  
+  <br>
+  <br>
+  <br>
+  <div>
+    <p>Written by XiongHanliang 1073167306@qq.com</p>
+  </div>
   <script>
+    var choiceArr = new Array(5)
+    var curChoice = null
+    var radioArr = null;
+    var rowClassNames = [
+      "1.jpg",
+      "2.jpg"
+    ]
+    var picNums = 5
+
+    $.column = function(i) {
+      return $('tr td:nth-child('+(i+1)+')', this)
+    }
+
+
+    function processCheck(input_radio) {
+        //console.log("$(this):", $(this))
+        //console.log("input_radio:", input_radio.parent)
+        if(input_radio.name == "first" && input_radio.checked == true) {
+          //$('table tr > td:nth-child(2)').attr('style', 'background-color:green;');
+          //$.column(1).attr('style', 'background-color:green;');
+          $.column(1).addClass("selected")
+          choiceArr[0] = $(".")//class name, same as pic name
+        }
+        if(input_radio.name == "second" && input_radio.checked == true) {
+          //$.column(2).attr('style', 'background-color:green;');
+          $.column(2).addClass("selected")
+        }
+
+        if(input_radio.name == "third" && input_radio.checked == true) {
+          //$.column(3).attr('style', 'background-color:green;');
+          $.column(3).addClass("selected")
+        }
+
+        if(input_radio.name == "forth" && input_radio.checked == true) {
+          //$.column(4).attr('style', 'background-color:green;');
+          $.column(4).addClass("selected")
+        }
+
+        if(input_radio.name == "fifth" && input_radio.checked == true) {
+          //$.column(5).attr('style', 'background-color:green;');
+          $.column(5).addClass("selected")
+        }
+
+    }
+    function checkIfChoiceValid() {
+      //get current choice
+      
+      console.log("this:", $(this))
+      if(this.class == "row_1" && this.checked == true) {
+        curChoice = "1"
+      } 
+      for(var i=0; i<choiceArr.length; i++) {
+        console.log("choiceArr[i]:", choiceArr[i])
+        if(choiceArr[i] == curChoice && choiceArr[i] != undefined) {
+          alert("same choice")
+          return
+        }
+      }
+      choiceArr[i] == curChoice
+      //fill the choice to the result arry
+      //FillChoiceArray()
+    }
+    
+    function hoverChangeColor() {
+      $('table tr:gt(0)').hover(
+        function() {
+          $(this).addClass("hover")
+          console.log("hover in")
+        },
+        function() {
+          $(this).removeClass("hover")
+          console.log("hover out")
+        }
+      )
+    }
+    function OddAndEvenColor() {
+      $('table tbody tr:odd').addClass('odd')
+      $('table tbody tr:even').addClass('even')
+    }
     $(document).ready(function() {
-      $('input[type=radio]').change(function() {
-        if(this.name == "first" && this.checked == true) {
-          $('table tr > td:nth-child(2), table tr > th:nth-child(2)')
-    .attr('style', 'background-color:green;');
-        }
+      radioArr = $('input[type=radio]')
+      //console.log(radioArr[0])
+      //change color
+      radioArr.change(function() {
+        //console.log(this.length)
+        processCheck(this)
+        //checkIfChoiceValid(this)
+        //console.log(this.name)
+      })
 
-        if(this.name == "second" && this.checked == true) {
-          $('table tr > td:nth-child(3), table tr > th:nth-child(3)')
-    .attr('style', 'background-color:green;');
-        }
-
-        if(this.name == "third" && this.checked == true) {
-          $('table tr > td:nth-child(4), table tr > th:nth-child(4)')
-    .attr('style', 'background-color:green;');
-        }
-
-        if(this.name == "forth" && this.checked == true) {
-          $('table tr > td:nth-child(5), table tr > th:nth-child(5)')
-    .attr('style', 'background-color:green;');
-        }
-
-        if(this.name == "fifth" && this.checked == true) {
-          $('table tr > td:nth-child(6), table tr > th:nth-child(6)')
-    .attr('style', 'background-color:green;');
-        }
+      //odd and even different color
+      //OddAndEvenColor()
+      //hover change row color
+      //hoverChangeColor()
+      //console.log("select inputs:", $('input[type=radio]').first())
+      
+      $("#clear_all").click(function() {
+        $('input[type=radio]').prop("checked", false)
+        $('table  tr > td').removeClass("selected")
+        console.log("clear all select")
       })
     })
   </script>

@@ -6,3 +6,18 @@ td {
 table, td, tr{
     border: 1px solid;
 }
+
+.hover {
+    background-color: red;
+}
+
+.odd {
+    background-color: green;
+}
+.even {
+    background-color: blue;
+}
+
+.selected {
+    background-color: green;
+}
