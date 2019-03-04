@@ -3,7 +3,7 @@ var app = express()
 
 app.post("/", function(req, res) {
     console.log("req.params: " , req.params)
-    res.end()
+    res.send("thank you for voting")
 })
 
 var server = app.listen(3344, "192.168.56.101", function() {

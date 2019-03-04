@@ -31,7 +31,7 @@
       <th>第四选择</th>
       <th>第五选择</th>
     </tr>
-    <tr>
+    <tr class="1.jpg">
       <td><img src="./imgs/1.jpg"></td>
       <td><input type="radio" name="first" class="1.jpg"></td>
       <td><input type="radio" name="second" class="1.jpg"></td>
@@ -40,7 +40,7 @@
       <td><input type="radio" name="fifth" class="1.jpg"></td>
     </tr>
 
-    <tr>
+    <tr class="2.jpg">
       <td><img src="./imgs/2.jpg"></td>
       <td><input type="radio" name="first" class="2.jpg"></td>
       <td><input type="radio" name="second" class="2.jpg"></td>
@@ -49,7 +49,7 @@
       <td><input type="radio" name="fifth" class="2.jpg"></td>
     </tr>
 
-    <tr>
+    <tr class="3.jpg">
       <td><img src="./imgs/3.jpg"></td>
       <td><input type="radio" name="first"></td>
       <td><input type="radio" name="second"></td>
@@ -58,7 +58,7 @@
       <td><input type="radio" name="fifth"></td>
     </tr>
 
-    <tr>
+    <tr class="4.jpg">
       <td><img src="./imgs/4.jpg"></td>
       <td><input type="radio" name="first"></td>
       <td><input type="radio" name="second"></td>
@@ -67,7 +67,7 @@
       <td><input type="radio" name="fifth"></td>
     </tr>
 
-    <tr>
+    <tr class="5.jpg">
       <td><img src="./imgs/5.jpg"></td>
       <td><input type="radio" name="first"></td>
       <td><input type="radio" name="second"></td>
@@ -76,7 +76,7 @@
       <td><input type="radio" name="fifth"></td>
     </tr>
 
-  
+
   </table>
   <br>
   <br>
@@ -99,6 +99,7 @@
   <div>
     <p>Written by XiongHanliang 1073167306@qq.com</p>
   </div>
+
   <script>
     var choiceArr = new Array(5)
     var curChoice = null
@@ -110,59 +111,80 @@
     var picNums = 5
 
     $.column = function(i) {
+      //console.log("column this:", this)
       return $('tr td:nth-child('+(i+1)+')', this)
     }
 
 
     function processCheck(input_radio) {
         //console.log("$(this):", $(this))
-        //console.log("input_radio:", input_radio.parent)
-        if(input_radio.name == "first" && input_radio.checked == true) {
+        //console.log("input_radio:", input_radio.parent().parent().prop("class"))
+        //console.log("this", this)
+
+        //check
+        /*
+        choiceArr.forEach(function(item, index, array) {
+          //console.log(item, index, array)
+          console.log("item:", item)
+          console.log("choiceArr:", choiceArr[index])
+          if(item == choiceArr[index] && choiceArr[index] != null) {
+            console.log("invalid choice")
+            $(input_radio[0]).prop("checked", false)
+            alert("同一个产品只能选择一次")
+            return
+          }
+        })
+        */
+        for(var i=0; i<choiceArr.length; i++) {
+          //console.log(choiceArr[i])
+          if(choiceArr[i] == input_radio.parent().parent().prop("class")
+              && (choiceArr[i] != null)) {
+            console.log("invalid choice")
+            $(input_radio[0]).prop("checked", false)
+            alert("同一个产品只能选择一次")
+            return
+          }
+        }
+        input_radio.parent().parent().prop("class")
+        if(input_radio[0].name == "first" && input_radio[0].checked == true) {
           //$('table tr > td:nth-child(2)').attr('style', 'background-color:green;');
           //$.column(1).attr('style', 'background-color:green;');
           $.column(1).addClass("selected")
-          choiceArr[0] = $(".")//class name, same as pic name
+          choiceArr[0] = input_radio.parent().parent().prop("class")//class name, same as pic name
+          console.log(choiceArr[0])
         }
-        if(input_radio.name == "second" && input_radio.checked == true) {
+        if(input_radio[0].name == "second" && input_radio[0].checked == true) {
           //$.column(2).attr('style', 'background-color:green;');
           $.column(2).addClass("selected")
+          choiceArr[1] = input_radio.parent().parent().prop("class")
         }
 
-        if(input_radio.name == "third" && input_radio.checked == true) {
+        if(input_radio[0].name == "third" && input_radio[0].checked == true) {
           //$.column(3).attr('style', 'background-color:green;');
           $.column(3).addClass("selected")
+          choiceArr[2] = input_radio.parent().parent().prop("class")
         }
 
-        if(input_radio.name == "forth" && input_radio.checked == true) {
+        if(input_radio[0].name == "forth" && input_radio[0].checked == true) {
           //$.column(4).attr('style', 'background-color:green;');
           $.column(4).addClass("selected")
+          choiceArr[3] = input_radio.parent().parent().prop("class")
         }
 
-        if(input_radio.name == "fifth" && input_radio.checked == true) {
+        if(input_radio[0].name == "fifth" && input_radio[0].checked == true) {
           //$.column(5).attr('style', 'background-color:green;');
           $.column(5).addClass("selected")
+          choiceArr[4] = input_radio.parent().parent().prop("class")
         }
 
+        choiceArr.forEach(function(item, index, array) {
+          //console.log(item, index, array)
+
+        })
+
     }
-    function checkIfChoiceValid() {
-      //get current choice
-      
-      console.log("this:", $(this))
-      if(this.class == "row_1" && this.checked == true) {
-        curChoice = "1"
-      } 
-      for(var i=0; i<choiceArr.length; i++) {
-        console.log("choiceArr[i]:", choiceArr[i])
-        if(choiceArr[i] == curChoice && choiceArr[i] != undefined) {
-          alert("same choice")
-          return
-        }
-      }
-      choiceArr[i] == curChoice
-      //fill the choice to the result arry
-      //FillChoiceArray()
-    }
-    
+
+
     function hoverChangeColor() {
       $('table tr:gt(0)').hover(
         function() {
@@ -179,23 +201,36 @@
       $('table tbody tr:odd').addClass('odd')
       $('table tbody tr:even').addClass('even')
     }
+    //console.log("global this 1:", this)
+    //console.log("global this 1:", $(this))
     $(document).ready(function() {
-      radioArr = $('input[type=radio]')
+      //console.log("global this 2:", $(this))
+      //radioArr = $('input[type=radio]')
+      //console.log(radioArr.parent().parent().prop("class"))
+
       //console.log(radioArr[0])
       //change color
+      /*
       radioArr.change(function() {
         //console.log(this.length)
-        processCheck(this)
+        //console.log($(this).parent().parent().prop("class"))
+        processCheck($(this))
         //checkIfChoiceValid(this)
         //console.log(this.name)
       })
-
+      */
+      $('input[type=radio]').each(function() {
+        //console.log(this)
+        $(this).change(function() {
+          processCheck($(this))
+        })
+      })
       //odd and even different color
       //OddAndEvenColor()
       //hover change row color
       //hoverChangeColor()
       //console.log("select inputs:", $('input[type=radio]').first())
-      
+
       $("#clear_all").click(function() {
         $('input[type=radio]').prop("checked", false)
         $('table  tr > td').removeClass("selected")
